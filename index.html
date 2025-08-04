@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORYVA – Invest smarter. Grow stronger.</title>
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #2d1457 0%, #6c2eb7 100%); min-height: 100vh; color: #fff; }
+    .mvp-banner { width: 100%; background: #ffb347; color: #111; font-weight: 700; font-size: 1.08rem; padding: 0.7rem 0.5rem 0.7rem 1.2rem; display: flex; align-items: center; gap: 1.2rem; letter-spacing: 0.01em; border-bottom: 1px solid #e6a100; z-index: 1000; position: sticky; top: 0; box-shadow: 0 2px 12px #ffb34733; }
+    .mvp-banner .mvp-link { color: #1a237e; text-decoration: underline; font-weight: 700; margin-left: 0.5rem; cursor: pointer; transition: color 0.2s; }
+    .mvp-banner .mvp-link:hover { color: #3b82f6; }
+    .oryva-header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem 0.5rem 1.5rem; background: none; max-width: 900px; margin: 0 auto; }
+    .oryva-logo { font-size: 2rem; font-weight: 700; letter-spacing: 0.04em; background: linear-gradient(90deg, #f472b6 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .oryva-nav { display: flex; gap: 1rem; }
+    .oryva-nav-btn { background: none; border: 1.5px solid #a78bfa; color: #a78bfa; border-radius: 8px; padding: 0.5rem 1.2rem; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.2s, color 0.2s; }
+    .oryva-nav-btn:hover { background: #a78bfa22; color: #fff; }
+    .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; padding: 2.5rem 1rem 1rem 1rem; text-align: center; }
+    .hero-title { font-size: 2.7rem; font-weight: 800; line-height: 1.08; margin-bottom: 1.2rem; letter-spacing: -0.01em; background: linear-gradient(90deg, #fff 60%, #e0c3fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-subtitle { font-size: 1.25rem; color: #e0e0e0; margin-bottom: 2.2rem; font-weight: 500; }
+    .hero-cta-group { display: flex; flex-direction: column; gap: 1.1rem; width: 100%; max-width: 420px; margin: 0 auto 2.5rem auto; }
+    .cta-main { background: linear-gradient(90deg, #a21caf 0%, #f472b6 100%); color: #fff; border: none; border-radius: 12px; font-size: 1.18rem; font-weight: 700; padding: 1.1rem 0; cursor: pointer; box-shadow: 0 2px 12px #a21caf22; transition: background 0.2s, transform 0.15s; }
+    .cta-main:hover { background: linear-gradient(90deg, #f472b6 0%, #a21caf 100%); transform: translateY(-2px) scale(1.03); }
+    .cta-blue { background: linear-gradient(90deg, #1a237e 0%, #3b82f6 100%); color: #fff; border: none; border-radius: 12px; font-size: 1.18rem; font-weight: 700; padding: 1.1rem 0; cursor: pointer; box-shadow: 0 2px 12px #1a237e22; transition: background 0.2s, transform 0.15s; }
+    .cta-blue:hover { background: linear-gradient(90deg, #3b82f6 0%, #1a237e 100%); transform: translateY(-2px) scale(1.03); }
+    .cta-outline { background: none; border: 2px solid #a78bfa; color: #a78bfa; border-radius: 12px; font-size: 1.18rem; font-weight: 700; padding: 1.1rem 0; cursor: pointer; transition: background 0.2s, color 0.2s, transform 0.15s; }
+    .cta-outline:hover { background: #a78bfa22; color: #fff; transform: translateY(-2px) scale(1.03); }
+    .about-section { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; display: flex; flex-wrap: wrap; gap: 2.5rem; align-items: flex-start; justify-content: center; }
+    .about-block { flex: 1 1 320px; min-width: 320px; background: linear-gradient(120deg, #3b2f63 0%, #6c2eb7 100%); border-radius: 18px; box-shadow: 0 2px 16px #0002; padding: 2rem 1.5rem 1.5rem 1.5rem; color: #fff; position: relative; margin-bottom: 1.5rem; }
+    .about-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.5rem; }
+    .about-icon { width: 28px; height: 28px; display: inline-block; vertical-align: middle; }
+    .about-desc { font-size: 1.05rem; color: #e0e0e0; margin-bottom: 0.7rem; }
+    .read-more { display: inline-flex; align-items: center; color: #a78bfa; font-weight: 600; cursor: pointer; font-size: 1rem; border: none; background: none; padding: 0; margin-top: 0.2rem; transition: color 0.2s; }
+    .read-more svg { margin-left: 0.3em; transition: transform 0.3s; }
+    .read-more.open svg { transform: rotate(180deg); }
+    .read-more-content { display: none; margin-top: 0.7rem; color: #e0e0e0; font-size: 0.98rem; line-height: 1.5; animation: fadeIn 0.5s; }
+    .read-more.open + .read-more-content { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .tech-split { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; }
+    .tech-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .split-bar { display: flex; align-items: center; margin-bottom: 1rem; gap: 1rem; }
+    .split-label { min-width: 200px; font-size: 1rem; color: #e0e0e0; display: flex; align-items: center; gap: 0.5rem; }
+    .split-progress { flex: 1; height: 12px; background: #3b2f63; border-radius: 6px; overflow: hidden; position: relative; }
+    .split-fill { height: 100%; background: linear-gradient(90deg, #a78bfa 0%, #f472b6 100%); border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 0.5rem; font-size: 0.9rem; font-weight: 700; color: #fff; transition: width 0.8s ease; }
+    .split-fill.blue { background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%); }
+    .team-section { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; }
+    .team-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .team-list { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+    .team-card { background: linear-gradient(120deg, #3b2f63 0%, #6c2eb7 100%); border-radius: 18px; box-shadow: 0 2px 16px #0002; padding: 1.5rem 1.2rem 1.2rem 1.2rem; min-width: 200px; max-width: 250px; flex: 1 1 200px; color: #fff; text-align: center; margin-bottom: 1.5rem; display: flex; flex-direction: column; align-items: center; }
+    .team-icon { margin-bottom: 0.8rem; color: #a78bfa; }
+    .team-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; color: #f472b6; }
+    .team-role { font-size: 1rem; color: #e0e0e0; text-align: center; }
+    .plans-section { background: linear-gradient(120deg, #2d1457 0%, #3b2f63 100%); padding: 3rem 1rem 2rem 1rem; border-radius: 32px 32px 0 0; margin-top: 2rem; }
+    .plans-title { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 2rem; background: linear-gradient(90deg, #fff 60%, #e0c3fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .plans { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; max-width: 1100px; margin: 0 auto; }
+    .plan-card { background: linear-gradient(120deg, #3b2f63 0%, #6c2eb7 100%); border-radius: 18px; box-shadow: 0 2px 16px #0002; padding: 2rem 1.5rem 1.5rem 1.5rem; min-width: 260px; max-width: 340px; flex: 1 1 260px; color: #fff; text-align: center; margin-bottom: 1.5rem; position: relative; transition: transform 0.18s, box-shadow 0.18s; }
+    .plan-card.popular { border: 2.5px solid #3b82f6; box-shadow: 0 4px 24px #3b82f655; z-index: 2; transform: scale(1.04); background: linear-gradient(120deg, #3b2f63 0%, #6c2eb7 100%); color: #fff; }
+    .plan-badge { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%); color: #fff; font-weight: 700; font-size: 1rem; padding: 0.4em 1.2em; border-radius: 16px; box-shadow: 0 2px 8px #3b82f633; letter-spacing: 0.02em; }
+    .plan-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .plan-desc { font-size: 1rem; color: #e0e0e0; margin-bottom: 1.2rem; }
+    .plan-card.popular .plan-desc { color: #e0e0e0; }
+    .plan-price { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.2rem; color: #f472b6; }
+    .plan-card.popular .plan-price { color: #3b82f6; }
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORYVA – Invest smarter. Grow stronger.</title>
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #2d1457 0%, #6c2eb7 100%); min-height: 100vh; color: #fff; }
+    .mvp-banner { width: 100%; background: #ffb347; color: #111; font-weight: 700; font-size: 1.08rem; padding: 0.7rem 0.5rem 0.7rem 1.2rem; display: flex; align-items: center; gap: 1.2rem; letter-spacing: 0.01em; border-bottom: 1px solid #e6a100; z-index: 1000; position: sticky; top: 0; box-shadow: 0 2px 12px #ffb34733; }
+    .mvp-banner .mvp-link { color: #1a237e; text-decoration: underline; font-weight: 700; margin-left: 0.5rem; cursor: pointer; transition: color 0.2s; }
+    .mvp-banner .mvp-link:hover { color: #3b82f6; }
+    .oryva-header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem 0.5rem 1.5rem; background: none; max-width: 900px; margin: 0 auto; }
+    .oryva-logo { font-size: 2rem; font-weight: 700; letter-spacing: 0.04em; background: linear-gradient(90deg, #f472b6 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .oryva-nav { display: flex; gap: 1rem; }
+    .oryva-nav-btn { background: none; border: 1.5px solid #a78bfa; color: #a78bfa; border-radius: 8px; padding: 0.5rem 1.2rem; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.2s, color 0.2s; }
+    .oryva-nav-btn:hover { background: #a78bfa22; color: #fff; }
+    .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; padding: 2.5rem 1rem 1rem 1rem; text-align: center; }
+    .hero-title { font-size: 2.7rem; font-weight: 800; line-height: 1.08; margin-bottom: 1.2rem; letter-spacing: -0.01em; background: linear-gradient(90deg, #fff 60%, #e0c3fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-subtitle { font-size: 1.25rem; color: #e0e0e0; margin-bottom: 2.2rem; font-weight: 500; }
+    .hero-cta-group { display: flex; flex-direction: column; gap: 1.1rem; width: 100%; max-width: 420px; margin: 0 auto 2.5rem auto; }
+    .cta-main { background: linear-gradient(90deg, #a21caf 0%, #f472b6 100%); color: #fff; border: none; border-radius: 12px; font-size: 1.18rem; font-weight: 700; padding: 1.1rem 0; cursor: pointer; box-shadow: 0 2px 12px #a21caf22; transition: background 0.2s, transform 0.15s; }
+    .cta-main:hover { background: linear-gradient(90deg, #f472b6 0%, #a21caf 100%); transform: translateY(-2px) scale(1.03); }
+    .cta-blue { background: linear-gradient(90deg, #1a237e 0%, #3b82f6 100%); color: #fff; border: none; border-radius: 12px; font-size: 1.18rem; font-weight: 700; padding: 1.1rem 0; cursor: pointer; box-shadow: 0 2px 12px #1a237e22; transition: background 0.2s, transform 0.15s; }
+    .cta-blue:hover { background: linear-gradient(90deg, #3b82f6 0%, #1a237e 100%); transform: translateY(-2px) scale(1.03); }
+    .cta-outline { background: none; border: 2px solid #a78bfa; color: #a78bfa; border-radius: 12px; font-size: 1.18rem; font-weight: 700; padding: 1.1rem 0; cursor: pointer; transition: background 0.2s, color 0.2s, transform 0.15s; }
+    .cta-outline:hover { background: #a78bfa22; color: #fff; transform: translateY(-2px) scale(1.03); }
+    .about-section { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; display: flex; flex-wrap: wrap; gap: 2.5rem; align-items: flex-start; justify-content: center; }
+    .about-block { flex: 1 1 320px; min-width: 320px; background: linear-gradient(120deg, #3b2f63 0%, #6c2eb7 100%); border-radius: 18px; box-shadow: 0 2px 16px #0002; padding: 2rem 1.5rem 1.5rem 1.5rem; color: #fff; position: relative; margin-bottom: 1.5rem; }
+    .about-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.5rem; }
+    .about-icon { width: 28px; height: 28px; display: inline-block; vertical-align: middle; }
+    .about-desc { font-size: 1.05rem; color: #e0e0e0; margin-bottom: 0.7rem; }
+    .read-more { display: inline-flex; align-items: center; color: #a78bfa; font-weight: 600; cursor: pointer; font-size: 1rem; border: none; background: none; padding: 0; margin-top: 0.2rem; transition: color 0.2s; }
+    .read-more svg { margin-left: 0.3em; transition: transform 0.3s; }
+    .read-more.open svg { transform: rotate(180deg); }
+    .read-more-content { display: none; margin-top: 0.7rem; color: #e0e0e0; font-size: 0.98rem; line-height: 1.5; animation: fadeIn 0.5s; }
+    .read-more.open + .read-more-content { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .tech-split { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; }
+    .tech-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .split-bar { display: flex; align-items: center; margin-bottom: 1rem; gap: 1rem; }
+    .split-label { min-width: 200px; font-size: 1rem; color: #e0e0e0; display: flex; align-items: center; gap: 0.5rem; }
+    .split-progress { flex: 1; height: 12px; background: #3b2f63; border-radius: 6px; overflow: hidden; position: relative; }
+    .split-fill { height: 100%; background: linear-gradient(90deg, #a78bfa 0%, #f472b6 100%); border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 0.5rem; font-size: 0.9rem; font-weight: 700; color: #fff; transition: width 0.8s ease; }
+    .split-fill.blue { background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%); }
+    .team-section { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; }
+    .team-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .team-list { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+    .team-card { background: linear-gradient(120deg, #3b2f63 0%, #6c2eb7 100%); border-radius: 18px; box-shadow: 0 2px 16px #0002; padding: 1.5rem 1.2rem 1.2rem 1.2rem; min-width: 200px; max-width: 250px; flex: 1 1 200px; color: #fff; text-align: center; margin-bottom: 1.5rem; display: flex; flex-direction: column; align-items: center; }
+    .team-icon { margin-bottom: 0.8rem; color: #a78bfa; }
+    .team-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.3rem; color: #f472b6; }
+    .team-role { font-size: 1rem; color: #e0e0e0; text-align: center; }
+    .plans-section { background: linear-gradient(120deg, #2d1457 0%, #3b2f63 100%); padding: 3rem 1rem 2rem 1rem; border-radius: 32px 32px 0 0; margin-top: 2rem; }
+    .plans-title { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 2rem; background: linear-gradient(90deg, #fff 60%, #e0c3fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .plans { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; max-width: 1100px; margin: 0 auto; }
+    .plan-card { background: linear-gradient(120deg, #3b2f63 0%, #6c2eb7 100%); border-radius: 18px; box-shadow: 0 2px 16px #0002; padding: 2rem 1.5rem 1.5rem 1.5rem; min-width: 260px; max-width: 340px; flex: 1 1 260px; color: #fff; text-align: center; margin-bottom: 1.5rem; position: relative; transition: transform 0.18s, box-shadow 0.18s; }
+    .plan-card.popular { border: 2.5px solid #3b82f6; box-shadow: 0 4px 24px #3b82f655; z-index: 2; transform: scale(1.04); background: linear-gradient(120deg, #3b2f63 0%, #6c2eb7 100%); color: #fff; }
+    .plan-badge { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%); color: #fff; font-weight: 700; font-size: 1rem; padding: 0.4em 1.2em; border-radius: 16px; box-shadow: 0 2px 8px #3b82f633; letter-spacing: 0.02em; }
+    .plan-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .plan-desc { font-size: 1rem; color: #e0e0e0; margin-bottom: 1.2rem; }
+    .plan-card.popular .plan-desc { color: #e0e0e0; }
+    .plan-price { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.2rem; color: #f472b6; }
+    .plan-card.popular .plan-price { color: #3b82f6; }
+    .plan-btn { background: linear-gradient(90deg, #a21caf 0%, #f472b6 100%); color: #fff; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; padding: 0.9rem 0; cursor: pointer; box-shadow: 0 2px 12px #a21caf22; transition: background 0.2s, transform 0.15s; width: 100%; }
+    .plan-card.popular .plan-btn { background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%); color: #fff; }
+    .plan-btn:hover { background: linear-gradient(90deg, #f472b6 0%, #a21caf 100%); transform: translateY(-2px) scale(1.03); }
+    .plan-card.popular .plan-btn:hover { background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%); }
+    .payment-section { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; }
+    .payment-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .payment-desc { color: #e0e0e0; font-size: 1.05rem; margin-bottom: 1.2rem; }
+    .payment-options { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    .payment-card { background: linear-gradient(120deg, #3b2f63 0%, #6c2eb7 100%); border-radius: 12px; box-shadow: 0 2px 12px #0002; padding: 1rem 1rem 0.8rem 1rem; min-width: 120px; max-width: 150px; flex: 1 1 120px; color: #fff; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .payment-icon { font-size: 1.5rem; margin-bottom: 0.3rem; color: #a78bfa; font-weight: bold; }
+    .payment-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; color: #f472b6; }
+    .payment-desc-small { font-size: 0.9rem; color: #e0e0e0; text-align: center; }
+    .faq-section { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; }
+    .faq-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .faq-list { display: flex; flex-direction: column; gap: 1.2rem; }
+    .faq-q { font-weight: 600; color: #a78bfa; margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+    .faq-a { color: #e0e0e0; font-size: 1.05rem; display: none; margin-left: 1.2em; }
+    .faq-q.open + .faq-a { display: block; animation: fadeIn 0.5s; }
+    .partners-section { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; }
+    .partners-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .partners-desc { color: #e0e0e0; font-size: 1.05rem; margin-bottom: 1.2rem; }
+    .mvp-info { max-width: 900px; margin: 2.5rem auto 1.5rem auto; padding: 1.2rem 1rem; background: #fffbe6; color: #222; border-radius: 14px; font-size: 1.05rem; box-shadow: 0 2px 12px #ffb34733; text-align: center; }
+    .mvp-more { color: #a78bfa; font-weight: 600; cursor: pointer; font-size: 1rem; border: none; background: none; margin-top: 0.5em; transition: color 0.2s; }
+    .mvp-more.open { color: #3b82f6; }
+    .mvp-more-content { display: none; margin-top: 0.7rem; color: #222; font-size: 0.98rem; line-height: 1.5; animation: fadeIn 0.5s; text-align: left; }
+    .mvp-more.open + .mvp-more-content { display: block; }
+    .mvp-ambitions { margin-top: 1.2em; background: linear-gradient(90deg, #e3edfa 0%, #dbeafe 100%); border-radius: 12px; padding: 1em 1em 0.7em 1em; color: #1a237e; font-size: 1.01rem; box-shadow: 0 2px 8px #3b82f622; }
+    .mvp-ambitions-title { font-weight: 700; color: #3b82f6; margin-bottom: 0.5em; font-size: 1.08rem; }
+    .mvp-ambitions-list { margin: 0.5em 0 0 1.2em; padding: 0; color: #1a237e; font-size: 1.01rem; }
+    .mvp-ambitions-list li { margin-bottom: 0.3em; list-style: disc; }
+    .footer { background: #1a1333; color: #e0e0e0; text-align: center; padding: 2rem 1rem 1rem 1rem; font-size: 1rem; margin-top: 2rem; }
+    .legal-links { display: flex; justify-content: center; gap: 2.5rem; margin-bottom: 1.2rem; font-size: 1.05rem; }
+    .legal-link { color: #a78bfa; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3em; font-weight: 600; text-decoration: none; transition: color 0.2s; }
+    .legal-link:hover { color: #f472b6; }
+    .legal-link svg { transition: transform 0.3s; }
+    @media (max-width: 900px) { .about-section, .tech-split, .team-section, .faq-section, .partners-section { flex-direction: column; align-items: center; } .oryva-header { max-width: 100%; } .plans { flex-direction: column; align-items: center; } }
+    @media (max-width: 600px) { .hero-title { font-size: 2rem; } .hero-cta-group { max-width: 100%; } .oryva-header { flex-direction: column; gap: 0.5rem; } .about-block, .plan-card, .team-card { min-width: 90vw; max-width: 98vw; } .features, .plans { gap: 1rem; } .legal-links { flex-direction: column; gap: 1rem; } }
+  </style>
+</head>
+<body>
+  <!-- MVP Banner -->
+  <div class="mvp-banner">
+    <span>✏️ VERSION MVP - Phase test limitée à 10 000 participants</span>
+    <span>• Lancement officiel 2026</span>
+    <span class="mvp-link">Détails MVP</span>
+  </div>
+  <!-- Header -->
+  <div class="oryva-header">
+    <span class="oryva-logo">ORYVA</span>
+    <div class="oryva-nav">
+      <button class="oryva-nav-btn">Choisir mon plan</button>
+      <button class="oryva-nav-btn">Pré-inscription</button>
+    </div>
+  </div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-title">Invest smarter.<br>Grow stronger.</div>
+    <div class="hero-subtitle">L'intelligence financière au service de vos ambitions.</div>
+    <div class="hero-cta-group">
+      <button class="cta-main">Je me pré-inscris maintenant →</button>
+      <button class="cta-blue">Je deviens partenaire</button>
+      <button class="cta-outline">Je choisis mon plan</button>
+    </div>
+  </section>
+  <!-- About & Features -->
+  <section class="about-section">
+    <div class="about-block">
+      <div class="about-title"><span class="about-icon">
+        <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </span>Qui sommes-nous ?</div>
+      <div class="about-desc">ORYVA est une plateforme d'investissement collaboratif de nouvelle génération. Nous combinons intelligence artificielle, algorithmes de trading, et traders expérimentés pour offrir des stratégies performantes, évolutives et accessibles dès 5 $.</div>
+      <button class="read-more" onclick="toggleReadMore(this)">Lire la suite <svg width="18" height="18" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="read-more-content">Notre vision : automatiser la finance sans en effacer l'humain, pour rendre l'investissement intelligent, transparent et inclusif.</div>
+    </div>
+    <div class="about-block">
+      <div class="about-title"><span class="about-icon">
+        <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg>
+      </span>Pourquoi ORYVA ?</div>
+      <div class="about-desc">Technologie intelligente & évolutive, traders expérimentés intégrés, accessibilité totale dès 5 $, sécurité et transparence.</div>
+      <button class="read-more" onclick="toggleReadMore(this)">Lire la suite <svg width="18" height="18" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="read-more-content">Ce seuil de 5 $ est conçu pour rendre l'investissement accessible à tous. Votre capital est regroupé avec d'autres pour former un fonds commun, permettant de participer à des projets simples mais rentables. Même si vous envisagez un capital plus important, nous vous recommandons vivement de commencer par ce plan à 5 $ pour tester et découvrir la plateforme en phase collaborative. Note importante : Tout investissement comporte des risques, y compris les petits capitaux. Pour un début plus robuste après cette phase de découverte de 5$ et pour un engagement optimal, nous suggérons un investissement initial de 25 à 50. Cependant, cette recommandation n'est pas obligatoire : si les bénéfices générés par votre investissement de 5$ sont suffisants, vous pouvez les réinvestir pour faire croître votre capital. Veuillez noter que pour les plans d'investissement supérieurs (Plan 2 et au-delà), les niveaux de capital requis sont à respecter impérativement.</div>
+    </div>
+  </section>
+  <section class="about-section">
+    <div class="about-block">
+      <div class="about-title"><span class="about-icon">
+        <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v5c0 5.25-3.5 10-7 11-3.5-1-7-5.75-7-11V6l7-4z"/></svg>
+      </span>Sécurité & Souveraineté</div>
+      <div class="about-desc">Capital jamais stocké sur la plateforme, paiements via partenaires sécurisés, données encryptées, retraits flexibles.</div>
+      <button class="read-more" onclick="toggleReadMore(this)">Lire la suite <svg width="18" height="18" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="read-more-content">Vos fonds demeurent toujours sous votre contrôle, gérés par des intermédiaires financiers réglementés et sécurisés (tels que des brokers ou des bourses d'échange) avec lesquels nous collaborons via des API cryptées. ORYVA n'agit pas en tant que dépositaire de fonds ; nous facilitons uniquement l'exécution des stratégies d'investissement. Cette approche garantit une séparation claire entre votre capital et la plateforme, renforçant ainsi la sécurité et la transparence de vos investissements. Paiements uniquement via partenaires sécurisés : Binance (crypto USDT/BTC), Coinbase Commerce, Skrill, Mobile Money. Aucune donnée bancaire conservée.</div>
+    </div>
+    <div class="about-block">
+      <div class="about-title"><span class="about-icon">
+        <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="14" height="8" rx="2"/></svg>
+      </span>Nos Services</div>
+      <div class="about-desc">Analyse algorithmique en temps réel, gestion de portefeuille semi-automatisée, alertes stratégiques par IA.</div>
+      <button class="read-more" onclick="toggleReadMore(this)">Lire la suite <svg width="18" height="18" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="read-more-content">Reporting personnalisé des performances, suivi et accompagnement humain progressif, interface claire pour suivre l'évolution de son capital. ORYVA repose sur une infrastructure solide, alliant modèles IA avancés pour la détection de signaux de marché, bots algorithmiques propriétaires testés sur des milliers de cycles, architecture cloud-native sécurisée, et supervision humaine ponctuelle pour ajuster en cas de volatilité. La technologie s'adapte à votre profil et évolue selon le niveau de risque choisi.</div>
+    </div>
+  </section>
+  <!-- Répartition Technologique -->
+  <section class="tech-split">
+    <div class="tech-title"><span class="about-icon">
+      <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10h-10z"/></svg>
+    </span>Répartition Technologique</div>
+    <div class="split-bar">
+      <span class="split-label"><svg width="20" height="20" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="14" height="8" rx="2"/></svg> IA & Algorithmes internes</span>
+      <div class="split-progress"><div class="split-fill" style="width:63%">63%</div></div>
+    </div>
+    <div class="split-bar">
+      <span class="split-label"><svg width="20" height="20" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v16M2 10h16"/></svg> Experts financiers / traders</span>
+      <div class="split-progress"><div class="split-fill blue" style="width:37%">37%</div></div>
+    </div>
+    <div style="font-size:0.98rem;color:#e0e0e0;margin-top:0.7rem;">Cette répartition est dynamique, ajustée à chaque portefeuille pour une performance optimale.</div>
+  </section>
+  <!-- Team -->
+  <section class="team-section">
+    <div class="team-title"><span class="about-icon">
+      <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/></svg>
+    </span>L'équipe ORYVA</div>
+    <div class="team-list">
+      <div class="team-card">
+        <span class="team-icon"><svg width="38" height="38" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="19" cy="19" r="17"/><path d="M19 10v8l6 3"/></svg></span>
+        <div class="team-name">Varius</div>
+        <div class="team-role">Lead IA & gestion du risque</div>
+      </div>
+      <div class="team-card">
+        <span class="team-icon"><svg width="38" height="38" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="24" height="24" rx="6"/><path d="M19 13v6"/></svg></span>
+        <div class="team-name">Damien</div>
+        <div class="team-role">Développeur principal, infrastructure & sécurité</div>
+      </div>
+      <div class="team-card">
+        <span class="team-icon"><svg width="38" height="38" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="24" height="24" rx="6"/><circle cx="19" cy="19" r="7"/></svg></span>
+        <div class="team-name">Jack</div>
+        <div class="team-role">Analyste B.Tech & coordinateur technique</div>
+      </div>
+      <div class="team-card">
+        <span class="team-icon"><svg width="38" height="38" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="19" cy="19" r="17"/><path d="M19 10v8l-6 3"/></svg></span>
+        <div class="team-name">Tahir</div>
+        <div class="team-role">Support, communauté & modération globale</div>
+      </div>
+      <div class="team-card">
+        <span class="team-icon"><svg width="38" height="38" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="24" height="24" rx="6"/><path d="M19 13v6"/><circle cx="19" cy="19" r="7"/></svg></span>
+        <div class="team-name">Maëlys Asimov</div>
+        <div class="team-role">Architecte système & stratégie narrative</div>
+      </div>
+    </div>
+  </section>
+  <!-- Plans -->
+  <section class="plans-section" id="plans">
+    <div class="plans-title">Nos plans d'investissement</div>
+    <div class="plans">
+      <div class="plan-card">
+        <div class="plan-title">Quantum Start</div>
+        <div class="plan-desc">Capital : 5–10 $<br>Abonnement : Gratuit (puis 3$)<br>Commission : 60 %<br>Accès anonyme — test encadré</div>
+        <div class="plan-price">5–10 $</div>
+        <button class="plan-btn">Commencer</button>
+      </div>
+      <div class="plan-card">
+        <div class="plan-title">Optimus</div>
+        <div class="plan-desc">Capital : 20–49 $<br>Abonnement : 12 $/mois<br>Commission : 45 %<br>KYC simplifié, stratégie encadrée<br>Idéal pour découvrir le système sans prise de risque</div>
+        <div class="plan-price">20–49 $</div>
+        <button class="plan-btn">Choisir ce plan</button>
+      </div>
+      <div class="plan-card popular">
+        <div class="plan-badge">Populaire</div>
+        <div class="plan-title">Strategium</div>
+        <div class="plan-desc">Capital : 50–99 $<br>Abonnement : 29 $/mois<br>Commission : 45 %<br>Suivi semi-personnalisé<br>Accès aux statistiques détaillées</div>
+        <div class="plan-price">50–99 $</div>
+        <button class="plan-btn">Choisir ce plan</button>
+      </div>
+      <div class="plan-card">
+        <div class="plan-title">Visionnaire</div>
+        <div class="plan-desc">Capital : 100–299 $<br>Abonnement : 46 $/mois<br>Commission : 40–45 %<br>Accès aux scalping bots<br>Supervision directe par des experts financiers<br>Transition vers une autonomie stratégique</div>
+        <div class="plan-price">100–299 $</div>
+        <button class="plan-btn">Choisir ce plan</button>
+      </div>
+      <div class="plan-card">
+        <div class="plan-title">Quantum Élites</div>
+        <div class="plan-desc">Capital : 300 $ et +<br>Abonnement : 85–112 $/mois<br>Commission : 30–45 %<br>Stratégie hybride IA + humaine<br>Contrat exclusif, support prioritaire<br>Réduction des commissions à long terme</div>
+        <div class="plan-price">300 $ et +</div>
+        <button class="plan-btn">Devenir élite</button>
+      </div>
+    </div>
+  </section>
+  <!-- Section Paiement -->
+  <section class="payment-section">
+    <div class="payment-title"><span class="about-icon">
+      <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="20" height="12" rx="4"/><path d="M8 8V6a6 6 0 0 1 12 0v2"/></svg>
+    </span>Paiement sécurisé</div>
+    <div class="payment-desc">ORYVA privilégie les paiements digitaux et crypto pour garantir la confidentialité de vos données. Les paiements par carte bancaire sont possibles sur demande.</div>
+    <div class="payment-options">
+      <div class="payment-card">
+        <div class="payment-icon">B</div>
+        <div class="payment-name">Binance</div>
+        <div class="payment-desc-small">Crypto USDT / BTC</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon">C</div>
+        <div class="payment-name">Coinbase</div>
+        <div class="payment-desc-small">Coinbase Commerce</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon">S</div>
+        <div class="payment-name">Skrill</div>
+        <div class="payment-desc-small">Paiements digitaux</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon">M</div>
+        <div class="payment-name">Mobile Money</div>
+        <div class="payment-desc-small">Paiements mobiles</div>
+      </div>
+    </div>
+  </section>
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="faq-title"><span class="about-icon">
+      <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-2a2 2 0 1 0-2-2"/></svg>
+    </span>Foire Aux Questions (FAQ)</div>
+    <div class="faq-list">
+      <div>
+        <div class="faq-q" onclick="toggleFaq(this)">Comment fonctionne ORYVA ?</div>
+        <div class="faq-a">Vous choisissez un plan selon votre capital, la stratégie est automatisée par IA + intervention humaine si nécessaire.</div>
+      </div>
+      <div>
+        <div class="faq-q" onclick="toggleFaq(this)">Est-ce risqué ?</div>
+        <div class="faq-a">Oui, comme tout investissement. Mais nos modèles limitent les pertes via une gestion encadrée et des alertes automatiques.</div>
+      </div>
+      <div>
+        <div class="faq-q" onclick="toggleFaq(this)">Combien puis-je espérer ?</div>
+        <div class="faq-a">Selon les plans, certains utilisateurs enregistrent jusqu'à 14–21 % de rendement mensuel. Mais nous ne garantissons aucun résultat.</div>
+      </div>
+      <div>
+        <div class="faq-q" onclick="toggleFaq(this)">Puis-je retirer mes gains ?</div>
+        <div class="faq-a">Oui, vos gains sont accessibles pour un retrait flexible et régulier, conformément aux conditions de votre plan choisi. Nous n'appliquons aucun verrouillage forcé de votre capital ou de vos gains.</div>
+      </div>
+      <div>
+        <div class="faq-q" onclick="toggleFaq(this)">Où va mon capital ?</div>
+        <div class="faq-a">Vers des stratégies validées en externe. Aucun fonds n'est gardé directement sur ORYVA.</div>
+      </div>
+    </div>
+  </section>
+  <!-- Partenaires -->
+  <section class="partners-section">
+    <div class="partners-title"><span class="about-icon">
+      <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17l6-6 4 4 8-8"/><path d="M16 7l6 6"/></svg>
+    </span>Partenariats ORYVA</div>
+    <div class="partners-desc">Vous êtes trader, expert financier, développeur d'algorithmes ou analyste indépendant ? Intégrez notre réseau d'experts, gagnez en visibilité et soyez rémunéré selon vos performances. Après validation, votre bot ou stratégie peut être intégré à la plateforme.</div>
+    <button class="cta-blue">Proposer ma stratégie</button>
+  </section>
+  <!-- MVP Info -->
+  <div class="mvp-info">
+    <b>Qu'est-ce qu'un MVP ?</b><br>
+    Un MVP (Minimum Viable Product) est une version préliminaire du service, limitée à certaines fonctionnalités et à un nombre restreint d'utilisateurs, permettant de valider le concept et d'optimiser l'expérience avant le lancement officiel.
+    <button class="mvp-more" onclick="toggleMvpMore(this)">Lire la suite</button>
+    <div class="mvp-more-content">
+      <b>Phase MVP :</b> Les testeurs actifs bénéficient de primes spéciales, potentiellement supérieures à leur capital ou à leur plan actuel lors du lancement officiel prévu en 2026.<br>
+      <div class="mvp-ambitions">
+        <div class="mvp-ambitions-title">Ambitions à long terme</div>
+        <ul class="mvp-ambitions-list">
+          <li>✓ Une licence européenne complète d'ici 2026</li>
+          <li>✓ Un système de score d'investisseur intelligent</li>
+          <li>✓ Un portail multi-utilisateur (familles, groupes, entreprises)</li>
+          <li>✓ Une IA générative dédiée aux décisions financières</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Footer & Legal -->
+  <footer class="footer">
+    <div class="legal-links">
+      <a class="legal-link" href="#" onclick="alert('Conditions Générales d'Utilisation complètes à venir sur page dédiée.')">Conditions Générales d'Utilisation <svg width="16" height="16" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Lire la suite</a>
+      <a class="legal-link" href="#" onclick="alert('Politique de Confidentialité complète à venir sur page dédiée.')">Politique de Confidentialité <svg width="16" height="16" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Lire la suite</a>
+      <a class="legal-link" href="#" onclick="alert('Conformité légale (UE/USA) complète à venir sur page dédiée.')">Conformité légale <svg width="16" height="16" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Lire la suite</a>
+    </div>
+    <div>ORYVA © 2025 — Plateforme d'investissement collaborative.<br>Contact : <b><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="67141217170815132708151e110649060e">[email&#160;protected]</a></b></div>
+  </footer>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    function toggleReadMore(btn) {
+      btn.classList.toggle('open');
+      const content = btn.nextElementSibling;
+      if (btn.classList.contains('open')) {
+        content.style.display = 'block';
+      } else {
+        content.style.display = 'none';
+      }
+    }
+    function toggleFaq(el) {
+      el.classList.toggle('open');
+    }
+    function toggleMvpMore(btn) {
+      btn.classList.toggle('open');
+      const content = btn.nextElementSibling;
+      if (btn.classList.contains('open')) {
+        content.style.display = 'block';
+      } else {
+        content.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
+￼Enter    .plan-btn { background: linear-gradient(90deg, #a21caf 0%, #f472b6 100%); color: #fff; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; padding: 0.9rem 0; cursor: pointer; box-shadow: 0 2px 12px #a21caf22; transition: background 0.2s, transform 0.15s; width: 100%; }
+    .plan-card.popular .plan-btn { background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%); color: #fff; }
+    .plan-btn:hover { background: linear-gradient(90deg, #f472b6 0%, #a21caf 100%); transform: translateY(-2px) scale(1.03); }
+    .plan-card.popular .plan-btn:hover { background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 100%); }
+    .payment-section { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; }
+    .payment-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .payment-desc { color: #e0e0e0; font-size: 1.05rem; margin-bottom: 1.2rem; }
+    .payment-options { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    .payment-card { background: linear-gradient(120deg, #3b2f63 0%, #6c2eb7 100%); border-radius: 12px; box-shadow: 0 2px 12px #0002; padding: 1rem 1rem 0.8rem 1rem; min-width: 120px; max-width: 150px; flex: 1 1 120px; color: #fff; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .payment-icon { font-size: 1.5rem; margin-bottom: 0.3rem; color: #a78bfa; font-weight: bold; }
+    .payment-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; color: #f472b6; }
+    .payment-desc-small { font-size: 0.9rem; color: #e0e0e0; text-align: center; }
+    .faq-section { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; }
+    .faq-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .faq-list { display: flex; flex-direction: column; gap: 1.2rem; }
+    .faq-q { font-weight: 600; color: #a78bfa; margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+    .faq-a { color: #e0e0e0; font-size: 1.05rem; display: none; margin-left: 1.2em; }
+    .faq-q.open + .faq-a { display: block; animation: fadeIn 0.5s; }
+    .partners-section { max-width: 900px; margin: 0 auto 2.5rem auto; padding: 2rem 1rem 0 1rem; }
+    .partners-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .partners-desc { color: #e0e0e0; font-size: 1.05rem; margin-bottom: 1.2rem; }
+    .mvp-info { max-width: 900px; margin: 2.5rem auto 1.5rem auto; padding: 1.2rem 1rem; background: #fffbe6; color: #222; border-radius: 14px; font-size: 1.05rem; box-shadow: 0 2px 12px #ffb34733; text-align: center; }
+    .mvp-more { color: #a78bfa; font-weight: 600; cursor: pointer; font-size: 1rem; border: none; background: none; margin-top: 0.5em; transition: color 0.2s; }
+    .mvp-more.open { color: #3b82f6; }
+    .mvp-more-content { display: none; margin-top: 0.7rem; color: #222; font-size: 0.98rem; line-height: 1.5; animation: fadeIn 0.5s; text-align: left; }
+    .mvp-more.open + .mvp-more-content { display: block; }
+    .mvp-ambitions { margin-top: 1.2em; background: linear-gradient(90deg, #e3edfa 0%, #dbeafe 100%); border-radius: 12px; padding: 1em 1em 0.7em 1em; color: #1a237e; font-size: 1.01rem; box-shadow: 0 2px 8px #3b82f622; }
+    .mvp-ambitions-title { font-weight: 700; color: #3b82f6; margin-bottom: 0.5em; font-size: 1.08rem; }
+    .mvp-ambitions-list { margin: 0.5em 0 0 1.2em; padding: 0; color: #1a237e; font-size: 1.01rem; }
+    .mvp-ambitions-list li { margin-bottom: 0.3em; list-style: disc; }
+    .footer { background: #1a1333; color: #e0e0e0; text-align: center; padding: 2rem 1rem 1rem 1rem; font-size: 1rem; margin-top: 2rem; }
+    .legal-links { display: flex; justify-content: center; gap: 2.5rem; margin-bottom: 1.2rem; font-size: 1.05rem; }
+    .legal-link { color: #a78bfa; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3em; font-weight: 600; text-decoration: none; transition: color 0.2s; }
+    .legal-link:hover { color: #f472b6; }
+    .legal-link svg { transition: transform 0.3s; }
+    @media (max-width: 900px) { .about-section, .tech-split, .team-section, .faq-section, .partners-section { flex-direction: column; align-items: center; } .oryva-header { max-width: 100%; } .plans { flex-direction: column; align-items: center; } }
+    @media (max-width: 600px) { .hero-title { font-size: 2rem; } .hero-cta-group { max-width: 100%; } .oryva-header { flex-direction: column; gap: 0.5rem; } .about-block, .plan-card, .team-card { min-width: 90vw; max-width: 98vw; } .features, .plans { gap: 1rem; } .legal-links { flex-direction: column; gap: 1rem; } }
+  </style>
+</head>
+<body>
+  <!-- MVP Banner -->
+  <div class="mvp-banner">
+    <span>✏️ VERSION MVP - Phase test limitée à 10 000 participants</span>
+    <span>• Lancement officiel 2026</span>
+    <span class="mvp-link">Détails MVP</span>
+  </div>
+  <!-- Header -->
+  <div class="oryva-header">
+    <span class="oryva-logo">ORYVA</span>
+    <div class="oryva-nav">
+      <button class="oryva-nav-btn">Choisir mon plan</button>
+      <button class="oryva-nav-btn">Pré-inscription</button>
+    </div>
+  </div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-title">Invest smarter.<br>Grow stronger.</div>
+    <div class="hero-subtitle">L'intelligence financière au service de vos ambitions.</div>
+    <div class="hero-cta-group">
+      <button class="cta-main">Je me pré-inscris maintenant →</button>
+      <button class="cta-blue">Je deviens partenaire</button>
+      <button class="cta-outline">Je choisis mon plan</button>
+    </div>
+  </section>
+  <!-- About & Features -->
+  <section class="about-section">
+    <div class="about-block">
+      <div class="about-title"><span class="about-icon">
+        <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </span>Qui sommes-nous ?</div>
+      <div class="about-desc">ORYVA est une plateforme d'investissement collaboratif de nouvelle génération. Nous combinons intelligence artificielle, algorithmes de trading, et traders expérimentés pour offrir des stratégies performantes, évolutives et accessibles dès 5 $.</div>
+      <button class="read-more" onclick="toggleReadMore(this)">Lire la suite <svg width="18" height="18" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="read-more-content">Notre vision : automatiser la finance sans en effacer l'humain, pour rendre l'investissement intelligent, transparent et inclusif.</div>
+    </div>
+    <div class="about-block">
+      <div class="about-title"><span class="about-icon">
+        <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg>
+      </span>Pourquoi ORYVA ?</div>
+      <div class="about-desc">Technologie intelligente & évolutive, traders expérimentés intégrés, accessibilité totale dès 5 $, sécurité et transparence.</div>
+      <button class="read-more" onclick="toggleReadMore(this)">Lire la suite <svg width="18" height="18" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="read-more-content">Ce seuil de 5 $ est conçu pour rendre l'investissement accessible à tous. Votre capital est regroupé avec d'autres pour former un fonds commun, permettant de participer à des projets simples mais rentables. Même si vous envisagez un capital plus important, nous vous recommandons vivement de commencer par ce plan à 5 $ pour tester et découvrir la plateforme en phase collaborative. Note importante : Tout investissement comporte des risques, y compris les petits capitaux. Pour un début plus robuste après cette phase de découverte de 5$ et pour un engagement optimal, nous suggérons un investissement initial de 25 à 50. Cependant, cette recommandation n'est pas obligatoire : si les bénéfices générés par votre investissement de 5$ sont suffisants, vous pouvez les réinvestir pour faire croître votre capital. Veuillez noter que pour les plans d'investissement supérieurs (Plan 2 et au-delà), les niveaux de capital requis sont à respecter impérativement.</div>
+    </div>
+  </section>
+  <section class="about-section">
+    <div class="about-block">
+      <div class="about-title"><span class="about-icon">
+        <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v5c0 5.25-3.5 10-7 11-3.5-1-7-5.75-7-11V6l7-4z"/></svg>
+      </span>Sécurité & Souveraineté</div>
+      <div class="about-desc">Capital jamais stocké sur la plateforme, paiements via partenaires sécurisés, données encryptées, retraits flexibles.</div>
+      <button class="read-more" onclick="toggleReadMore(this)">Lire la suite <svg width="18" height="18" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="read-more-content">Vos fonds demeurent toujours sous votre contrôle, gérés par des intermédiaires financiers réglementés et sécurisés (tels que des brokers ou des bourses d'échange) avec lesquels nous collaborons via des API cryptées. ORYVA n'agit pas en tant que dépositaire de fonds ; nous facilitons uniquement l'exécution des stratégies d'investissement. Cette approche garantit une séparation claire entre votre capital et la plateforme, renforçant ainsi la sécurité et la transparence de vos investissements. Paiements uniquement via partenaires sécurisés : Binance (crypto USDT/BTC), Coinbase Commerce, Skrill, Mobile Money. Aucune donnée bancaire conservée.</div>
+    </div>
+    <div class="about-block">
+      <div class="about-title"><span class="about-icon">
+        <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="14" height="8" rx="2"/></svg>
+      </span>Nos Services</div>
+      <div class="about-desc">Analyse algorithmique en temps réel, gestion de portefeuille semi-automatisée, alertes stratégiques par IA.</div>
+      <button class="read-more" onclick="toggleReadMore(this)">Lire la suite <svg width="18" height="18" viewBox="0 0 20 20"><polyline points="6 8 10 12 14 8" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="read-more-content">Reporting personnalisé des performances, suivi et accompagnement humain progressif, interface claire pour suivre l'évolution de son capital. ORYVA repose sur une infrastructure solide, alliant modèles IA avancés pour la détection de signaux de marché, bots algorithmiques propriétaires testés sur des milliers de cycles, architecture cloud-native sécurisée, et supervision humaine ponctuelle pour ajuster en cas de volatilité. La technologie s'adapte à votre profil et évolue selon le niveau de risque choisi.</div>
+    </div>
+  </section>
+ Répartition Technologique -->
+  <section class="tech-split">
+    <div class="tech-title"><span class="about-icon">
+      <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10h-10z"/></svg>
+    </span>Répartition Technologique</div>
+    <div class="split-bar">
+      <span class="split-label"><svg width="20" height="20" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="14" height="8" rx="2"/></svg> IA & Algorithmes internes</span>
+      <div class="split-progress"><div class="split-fill" style="width:63%">63%</div></div>
+    </div>
+    <div class="split-bar">
+      <span class="split-label"><svg width="20" height="20" fill="none" stroke="#3b82f6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v16M2 10h16"/></svg> Experts financiers / traders</span>
+      <div class="split-progress"><div class="split-fill blue" style="width:37%">37%</div></div>
+    </div>
+    <div style="font-size:0.98rem;color:#e0e0e0;margin-top:0.7rem;">Cette répartition est dynamique, ajustée à chaque portefeuille pour une performance optimale.</div>
+  </section>
+  <!-- Team -->
+  <section class="team-section">
+    <div class="team-title"><span class="about-icon">
+      <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/></svg>
+    </span>L'équipe ORYVA</div>
+    <div class="team-list">
+      <div class="team-card">
+        <span class="team-icon"><svg width="38" height="38" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="19" cy="19" r="17"/><path d="M19 10v8l6 3"/></svg></span>
+        <div class="team-name">Varius</div>
+        <div class="team-role">Lead IA & gestion du risque</div>
+      </div>
+      <div class="team-card">
+        <span class="team-icon"><svg width="38" height="38" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="24" height="24" rx="6"/><path d="M19 13v6"/></svg></span>
+        <div class="team-name">Damien</div>
+        <div class="team-role">Développeur principal, infrastructure & sécurité</div>
+      </div>
+      <div class="team-card">
+        <span class="team-icon"><svg width="38" height="38" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="24" height="24" rx="6"/><circle cx="19" cy="19" r="7"/></svg></span>
+        <div class="team-name">Jack</div>
+        <div class="team-role">Analyste B.Tech & coordinateur technique</div>
+      </div>
+      <div class="team-card">
+        <span class="team-icon"><svg width="38" height="38" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="19" cy="19" r="17"/><path d="M19 10v8l-6 3"/></svg></span>
+        <div class="team-name">Tahir</div>
+        <div class="team-role">Support, communauté & modération globale</div>
+      </div>
+      <div class="team-card">
+        <span class="team-icon"><svg width="38" height="38" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="24" height="24" rx="6"/><path d="M19 13v6"/><circle cx="19" cy="19" r="7"/></svg></span>
+        <div class="team-name">Maëlys Asimov</div>
+        <div class="team-role">Architecte système & stratégie narrative</div>
+      </div>
+    </div>
+  </section>
+  <!-- Plans -->
+  <section class="plans-section" id="plans">
+    <div class="plans-title">Nos plans d'investissement</div>
+    <div class="plans">
+      <div class="plan-card">
+        <div class="plan-title">Quantum Start</div>
+        <div class="plan-desc">Capital : 5–10 $<br>Abonnement : Gratuit (puis 3$)<br>Commission : 60 %<br>Accès anonyme — test encadré</div>
+        <div class="plan-price">5–10 $</div>
+        <button class="plan-btn">Commencer</button>
+      </div>
+      <div class="plan-card">
+        <div class="plan-title">Optimus</div>
+        <div class="plan-desc">Capital : 20–49 $<br>Abonnement : 12 $/mois<br>Commission : 45 %<br>KYC simplifié, stratégie encadrée<br>Idéal pour découvrir le système sans prise de risque</div>
+        <div class="plan-price">20–49 $</div>
+        <button class="plan-btn">Choisir ce plan</button>
+      </div>
+      <div class="plan-card popular">
+        <div class="plan-badge">Populaire</div>
+        <div class="plan-title">Strategium</div>
+        <div class="plan-desc">Capital : 50–99 $<br>Abonnement : 29 $/mois<br>Commission : 45 %<br>Suivi semi-personnalisé<br>Accès aux statistiques détaillées</div>
+        <div class="plan-price">50–99 $</div>
+        <button class="plan-btn">Choisir ce plan</button>
+      </div>
+      <div class="plan-card">
+        <div class="plan-title">Visionnaire</div>
+        <div class="plan-desc">Capital : 100–299 $<br>Abonnement : 46 $/mois<br>Commission : 40–45 %<br>Accès aux scalping bots<br>Supervision directe par des experts financiers<br>Transition vers une autonomie stratégique</div>
+        <div class="plan-price">100–299 $</div>
+        <button class="plan-btn">Choisir ce plan</button>
+      </div>
+      <div class="plan-card">
+        <div class="plan-title">Quantum Élites</div>
+        <div class="plan-desc">Capital : 300 $ et +<br>Abonnement : 85–112 $/mois<br>Commission : 30–45 %<br>Stratégie hybride IA + humaine<br>Contrat exclusif, support prioritaire<br>Réduction des commissions à long terme</div>
+        <div class="plan-price">300 $ et +</div>
+        <button class="plan-btn">Devenir élite</button>
+      </div>
+    </div>
+  </section>
+  <!-- Section Paiement -->
+  <section class="payment-section">
+    <div class="payment-title"><span class="about-icon">
+      <svg width="24" height="24" fill="none" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="20" height="12" rx="4"/><path d="M8 8V6a6 6 0 0 1 12 0v2"/></svg>
+    </span>Paiement sécurisé</div>
+    <div class="payment-desc">ORYVA privilégie les paiements digitaux et crypto pour garantir la confidentialité de vos données. Les paiements par carte bancaire sont possibles sur demande.</div>
+    <div class="payment-options">
+      <div class="payment-card">
+        <div class="payment-icon">B</div>
+        <div class="payment-name">Binance</div>
+        <div class="payment-desc-small">Crypto USDT / BTC</div>
+      </div>
+      <div class="payment-card">
+        <div class="payment-icon">C</div>
+        <div class="payment-name">Coinbase</div>
+        <div class="payment-desc-small">Coinbase Commerce</div>
